@@ -1,9 +1,11 @@
 package com.shakeel.complexity_measure.identifiers;
 
+import java.text.ParseException;
+
 public class IfRecursionIdentifier {
 
 
-    private String codeLine;
+    private char[] codeLineArray;
     private int countBrackets;
     private int lineCount;
     private int countPlus;
@@ -12,27 +14,30 @@ public class IfRecursionIdentifier {
         setCountBrackets(0);
         setLineCount(0);
         setCountPlus(0);
-        setCodeLine("");
+        setCodeLineArray("".toCharArray());
     }
 
-    public void ifRecursionMethod(String codeLine){
+    public void ifRecursionMethod(String codeLine) throws ParseException {
 
-        char[] codeLineArray = codeLine.toCharArray();
+        setCodeLineArray(codeLine.toCharArray());
+        System.out.println(getCodeLineArray());
 
-        for ( char code : codeLineArray){
+        if(getCountBrackets() > 0 || codeLine.startsWith("if") || codeLine.startsWith("else")) {
+            for (char code : this.codeLineArray) {
 
-            if(code == '{'){
-                setCountBrackets(getCountBrackets() + 1);
-            } else if (code == '}'){
-                setCountBrackets(getCountBrackets() - 1);
-            }
-
-            if(getCountBrackets() > 0){
-                if(code == '+'){
-                    setCountPlus(getCountPlus() +1);
+                if (code == '{') {
+                    setCountBrackets(getCountBrackets() + 1);
+                } else if (code == '}') {
+                    setCountBrackets(getCountBrackets() - 1);
                 }
-            }
 
+                if (getCountBrackets() > 0) {
+                    if (code == '+') {
+                        setCountPlus(getCountPlus() + 1);
+                    }
+                }
+
+            }
         }
 
 //        if (codeLine.contains(" ")){
@@ -54,12 +59,12 @@ public class IfRecursionIdentifier {
 
     }
 
-    public String getCodeLine() {
-        return codeLine;
+    public char[] getCodeLineArray() {
+        return codeLineArray;
     }
 
-    public void setCodeLine(String codeLine) {
-        this.codeLine = codeLine;
+    public void setCodeLineArray(char[] codeLineArray) {
+        this.codeLineArray = codeLineArray;
     }
 
     public int getCountBrackets() {
