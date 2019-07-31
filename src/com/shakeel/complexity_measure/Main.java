@@ -12,7 +12,7 @@ public class Main {
         IfRecursionIdentifier ifRecursionIdentifier = new IfRecursionIdentifier();
 
         String codeLine = "if (6+1 == 7) { a - b = a; +-b = b}  a++;";
-        String codeLine2 = "else {";
+        String codeLine2 = "}else {";
         String codeLine3 = "+++}";
 
         try {

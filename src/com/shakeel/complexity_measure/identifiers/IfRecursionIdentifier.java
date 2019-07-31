@@ -39,7 +39,11 @@ public class IfRecursionIdentifier {
 
             for (char code : this.codeLineArray) {
 
-                if ((block.replace(" ", "")).startsWith("if(") || (block.replace(" ", "")).startsWith("}else") || block.startsWith("else") ||getCountBrackets() > 0) {
+                if ((block.replace(" ", "")).startsWith("if(")
+                        || (block.replace(" ", "")).startsWith("}else")
+                        || block.startsWith("else")
+                        || getCountBrackets() > 0
+                ) {
 
                     if (code == '{') {
                         System.out.println(getCountBrackets());
