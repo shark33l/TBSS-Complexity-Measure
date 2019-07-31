@@ -9,6 +9,7 @@ public class IfRecursionIdentifier {
     private int countBrackets;
     private int lineCount;
     private int countPlus;
+    private int identifyIfElse;
 
     public IfRecursionIdentifier() {
         setCountBrackets(0);
@@ -19,22 +20,43 @@ public class IfRecursionIdentifier {
 
     public void ifRecursionMethod(String codeLine) throws ParseException {
 
-        setCodeLineArray(codeLine.toCharArray());
-        System.out.println(getCodeLineArray());
+        String[] stringCodeArray = codeLine.split("(?=})");
+        //System.out.println(getCodeLineArray());
 
-        if(getCountBrackets() > 0 || codeLine.startsWith("if") || codeLine.startsWith("else")) {
+        for (String block : stringCodeArray) {
+
+            System.out.println(block);
+
+            setCodeLineArray(block.toCharArray());
+
+            if((block.replace(" ", "")).startsWith("}else")){
+                System.out.println("Started with else");
+
+                //Reduce the start bracket
+                setCountBrackets(getCountBrackets() + 1);
+
+            }
+
             for (char code : this.codeLineArray) {
 
-                if (code == '{') {
-                    setCountBrackets(getCountBrackets() + 1);
-                } else if (code == '}') {
-                    setCountBrackets(getCountBrackets() - 1);
-                }
+                if ((block.replace(" ", "")).startsWith("if(") || (block.replace(" ", "")).startsWith("}else") || block.startsWith("else") ||getCountBrackets() > 0) {
 
-                if (getCountBrackets() > 0) {
-                    if (code == '+') {
-                        setCountPlus(getCountPlus() + 1);
+                    if (code == '{') {
+                        System.out.println(getCountBrackets());
+                        setCountBrackets(getCountBrackets() + 1);
+                    } else if (code == '}') {
+                        System.out.println(getCountBrackets());
+                        setCountBrackets(getCountBrackets() - 1);
                     }
+
+                    if (getCountBrackets() > 0) {
+                        if (code == '+') {
+                            setCountPlus(getCountPlus() + 1);
+                        }
+                    }
+
+                } else {
+
                 }
 
             }
@@ -89,5 +111,13 @@ public class IfRecursionIdentifier {
 
     public void setCountPlus(int countPlus) {
         this.countPlus = countPlus;
+    }
+
+    public int getIdentifyIfElse() {
+        return identifyIfElse;
+    }
+
+    public void setIdentifyIfElse(int identifyIfElse) {
+        this.identifyIfElse = identifyIfElse;
     }
 }
