@@ -15,7 +15,7 @@ public class NestedControlStructureController {
     //Regular expression for conditional and iterative control structures with open brackets
     String openBracketsChecking = "\\b((if|while|for|do)(\\s+|\\().*\\{)";
     //Regular expression for close bracket or empty line
-    String closeBracketChecking = "^(\\s*\\}\\s*)|^(\\s*)$";
+    String closeBracketEmptyLineChecking = "^(\\s*\\}\\s*)|^(\\s*)$";
     //Regular expression for close bracket
     String closeBracketChecking = "\\}";
     //Regular expression for else open bracket
@@ -48,7 +48,7 @@ public class NestedControlStructureController {
     public void calculateLineByLine(){
 
         Pattern pattern1 = Pattern.compile(openBracketsChecking);
-        Pattern pattern2 = Pattern.compile(closeBracketChecking);
+        Pattern pattern2 = Pattern.compile(closeBracketEmptyLineChecking);
         Pattern pattern3 = Pattern.compile(closeBracketChecking);
         Pattern pattern4 = Pattern.compile(elseBracketChecking);
         
@@ -59,14 +59,14 @@ public class NestedControlStructureController {
             String line = lines.get(i);
 
             //Checking for nested control structures
-            Matcher matcher = pattern1.matcher(line);
-            while (matcher.find()){
+            Matcher matcher1 = pattern1.matcher(line);
+            while (matcher1.find()){
                 addBracket();
             }
             pointsCount = brackets;
 
             //Checking for close bracket or empty line
-            Matcher matcher1 = pattern2.matcher(line);
+            Matcher matcher2 = pattern2.matcher(line);
             if (matcher1.find()){
                 pointsCount = 0;
             }
