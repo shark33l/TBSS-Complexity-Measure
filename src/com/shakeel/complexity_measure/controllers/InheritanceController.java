@@ -1,21 +1,16 @@
 package com.shakeel.complexity_measure.controllers;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class InheritanceController {
-//    static int ci_constant = 1;
-//
-//    //String extends_regex ="((?<!\\S)(extends\\s*))";
-//    String extends_regex ="((?<!\\S)(extends\\s*))";
-//
+    public static final String SOURCE_CODE_PATH = "C:/Users/sasmini_112033/Documents/SPM/InheritanceCode.java";
+    public static final String TYPE = "java";
+
    public void measureInheritanceComplexity() throws Exception{
 
-      FileReader file=new FileReader("C:/Users/sasmini_112033/Documents/SPM/InheritanceCode.txt");
+      FileReader file=new FileReader(SOURCE_CODE_PATH);
       BufferedReader reader=new BufferedReader(file);
 
        int lines = 0;
@@ -23,58 +18,17 @@ public class InheritanceController {
            lines++;
        reader.close();
 
-      //int arraySize = countLines(reader);
-      System.out.println(lines);
+      System.out.println("Number of lines: "+lines);
 
-      int ciArray[] = printCi(lines,"java");
-      for(int i=0; i<lines; i++){
-          System.out.println(ciArray[i]);
+      int ciArray[] = printCi(lines, TYPE);
+      for(int i=0; i < lines; i++){
+          System.out.println("Ci " +"line " + (i+1) + ": " + ciArray[i]);
       }
    }
 
-//
-//        String CurrentLine="";
-//        String line;
-//
-//        while((line = reader.readLine())!= null) {
-//
-//            //line=reader.readLine();
-//            //System.out.println(line);
-//            CurrentLine=line;
-//
-//            //CurrentLine = CurrentLine.replace(" ","");
-//
-//            //detectChar(CurrentLine,ch);
-//            extends_count(CurrentLine);
-//
-//        }
-//
-//        //System.out.println(this.Cs);
-//
-//    }
-//
-//    public int extends_count(String line) {
-//
-//
-//        Pattern pattern = Pattern.compile(extends_regex);
-//        Matcher matcher = pattern.matcher(line);
-//
-//
-//        int count = 0;
-//        while (matcher.find()) {
-//            count++;
-//        }
-//
-//        int ci_total = count + ci_constant + 1;
-//
-//
-//        System.out.println("Ci :" + ci_total);
-//        return ci_total;
-//    }
-
     public int countLines(String code) throws Exception{
 
-        FileReader file=new FileReader("C:/Users/sasmini_112033/Documents/SPM/InheritanceCode.txt");
+        FileReader file=new FileReader(SOURCE_CODE_PATH);
         BufferedReader reader=new BufferedReader(file);
 
         int lines = 0;
@@ -85,12 +39,17 @@ public class InheritanceController {
     }
 
     public int[] printCi(int Size, String Type) throws Exception{
-        FileReader file=new FileReader("C:/Users/sasmini_112033/Documents/SPM/InheritanceCode.txt");
-        BufferedReader reader=new BufferedReader(file);
+
+
+        File file=new File(SOURCE_CODE_PATH);
+        Scanner sc = new Scanner(file);
+
+        File file1=new File(SOURCE_CODE_PATH);
+        Scanner sc1 = new Scanner(file1);
 
         int arraySize = Size;
 
-        System.out.println(Size);
+        //System.out.println(Size);
 
         int Ci[] = new int[arraySize];
 
@@ -103,42 +62,38 @@ public class InheritanceController {
             defaultValue = 0;
         }
 
-        String[] lines = reader.readLine().split("\\r?\\n");
         int i=0;
 
-        for(String line : lines){
+        while(sc.hasNextLine()){
+            String line = sc.nextLine();
 
-            System.out.println(line);
-
-            if(line.contains("class ")){
-                defaultValue = defaultValue +1;
-            }
-            if(line.contains("extends ")){
-                defaultValue = defaultValue +1;
-            }
-            if(line.contains("implements ")){
-                defaultValue = defaultValue +1;
-            }
+                if (line.contains("class ")) {
+                    defaultValue = defaultValue + 1;
+                }
+                if (line.contains("extends ")) {
+                    defaultValue = defaultValue + 1;
+                }
+                if (line.contains("implements ")) {
+                    defaultValue = defaultValue + 1;
+                }
         }
 
-        for( i = 0 ; i<arraySize ; i++){
-            Ci[i] = defaultValue;
+        for( int z = 0 ; z<arraySize ; z++){
+            Ci[z] = defaultValue;
         }
 
-        int z = 0;
+        int temp = defaultValue;
 
-        for(String line : lines){
+        while(sc1.hasNextLine()){
+            String line1 = sc1.nextLine();
 
-            if(line.contains("class ")){
-                Ci[z] = 0;
+            if(line1.contains("class ") || line1.equals("} ") || line1.equals("}") || line1.equals("\\r?\\n") || line1.equals("") || line1.equals("else {") || line1.equals("else{")){
+                Ci[i] = 0;
             }
-            else if(line.equals("else { ")){
-                Ci[z] = 0;
-            }else if(line.equals("}")){
-                Ci[z] = 0;
-            }
-            z = z + 1;
+            i++;
         }
-        return Ci;
+      return Ci;
     }
+
+
 }
