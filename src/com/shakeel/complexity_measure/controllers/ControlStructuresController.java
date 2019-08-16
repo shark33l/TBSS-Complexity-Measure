@@ -18,9 +18,9 @@ public class ControlStructuresController {
     //Regular Expression for checking switch statements
     String caseChecking = "((?<!\\S)(case\\s+.*\\:|default\\s*\\:))";
     //Regular Expression for checking logical operators
-    String logicalOperatorsChecking = "(\\||)(\\&&)";
+    String logicalOperatorsChecking = "(\\||\\&&)";
     //Regular Expression for checking bitwise operators
-    String bitwiseOperatorsChecking = "(\\|)(\\&)";
+    String bitwiseOperatorsChecking = "(\\|\\&)";
 
     public ControlStructuresController(ArrayList<String> lines){
         this.lines  = lines;
