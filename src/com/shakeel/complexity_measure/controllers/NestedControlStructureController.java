@@ -16,18 +16,31 @@ public class NestedControlStructureController {
     String openBracketsChecking = "\\b((if|while|for|do)(\\s+|\\().*\\{)";
     //Regular expression for close bracket or empty line
     String closeBracketChecking = "^(\\s*\\}\\s*)|^(\\s*)$";
-
+    //Regular expression for close bracket
+    String closeBracketChecking = "\\}";
+    //Regular expression for else open bracket
+    String elseBracketChecking = "\\b((else)(.*\\{))";
+    
     public NestedControlStructureController(ArrayList<String> lines){
         this.lines = lines;
         cncCount = new ArrayList<Integer>(lines.size());
     }
 
-    public void changingBracketsCount(){
+//     public void changingBracketsCount(){
 
-        if(brackets > 0){
+//         if(brackets > 0){
+//             brackets--;
+//         }else{
+//             brackets++;
+//         }
+//     }
+    public void addBracket() {
+        brackets++;
+    }
+    
+    public void removeBracket() {
+        if (brackets > 0) {
             brackets--;
-        }else{
-            brackets++;
         }
     }
 
@@ -36,7 +49,9 @@ public class NestedControlStructureController {
 
         Pattern pattern1 = Pattern.compile(openBracketsChecking);
         Pattern pattern2 = Pattern.compile(closeBracketChecking);
-
+        Pattern pattern3 = Pattern.compile(closeBracketChecking);
+        Pattern pattern4 = Pattern.compile(elseBracketChecking);
+        
         //Calculate cnc value for each line
         for(int i = 0; i < lines.size() ; i++){
             int pointsCount = 0;
@@ -46,7 +61,7 @@ public class NestedControlStructureController {
             //Checking for nested control structures
             Matcher matcher = pattern1.matcher(line);
             while (matcher.find()){
-                changingBracketsCount();
+                addBracket();
             }
             pointsCount = brackets;
 
@@ -54,6 +69,18 @@ public class NestedControlStructureController {
             Matcher matcher1 = pattern2.matcher(line);
             if (matcher1.find()){
                 pointsCount = 0;
+            }
+            
+            //Checking for close bracket
+            Matcher matcher3 = pattern3.matcher(line);
+            while (matcher3.find()){
+                removeBracket();
+            }
+
+            //Checking for else open bracket
+            Matcher matcher4 = pattern4.matcher(line);
+            if (matcher4.find()){
+                addBracket();
             }
 
             cncCount.add(pointsCount);
