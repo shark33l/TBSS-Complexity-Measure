@@ -5,15 +5,37 @@ public class RecursionIdentifierModel {
     private int lineNo;
     private String line;
     private String methodName;
+    private String functionName;
+    private Boolean isMethod;
     private Boolean visited;
     private int countCr;
+
+//
+//    public RecursionIdentifierModel(){
+//        this.lineNo = 0;
+//        this.line = "";
+//        this.methodName = "";
+//        this.functionName = "";
+//        this.visited = false;
+//        this.countCr = 0;
+//    }
 
     public RecursionIdentifierModel(int lineNo, String line) {
         this.lineNo = lineNo;
         this.line = line;
         this.methodName = "";
+        this.functionName = "";
         this.visited = false;
         this.countCr = 0;
+        this.isMethod = false;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
     }
 
     public int getLineNo() {
@@ -54,5 +76,13 @@ public class RecursionIdentifierModel {
 
     public void setCountCr(int countCr) {
         this.countCr = countCr;
+    }
+
+    public Boolean getMethod() {
+        return isMethod;
+    }
+
+    public void setMethod(Boolean method) {
+        isMethod = method;
     }
 }

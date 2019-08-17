@@ -18,15 +18,47 @@ public class RecursionIdentifier {
 
     //Check variables
     Boolean methodFound;
-    Boolean methodVisited;
+    Boolean functionFound;
 
     public RecursionIdentifier() {
 
         this.method = "";
         this.functionName = "";
         this.methodFound = false;
-        this.methodVisited = false;
+        this.functionFound = false;
 
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
+    public Boolean getMethodFound() {
+        return methodFound;
+    }
+
+    public void setMethodFound(Boolean methodFound) {
+        this.methodFound = methodFound;
+    }
+
+    public Boolean getFunctionFound() {
+        return functionFound;
+    }
+
+    public void setFunctionFound(Boolean functionFound) {
+        this.functionFound = functionFound;
     }
 
     //After these Java keywords may come an opening parenthesis.
@@ -82,15 +114,27 @@ public class RecursionIdentifier {
                 if(Arrays.stream(methodKeywords).anyMatch(codeLine::contains)){
 
                     System.out.println("Method Name : " + methodName);
+                    setMethodFound(true);
+                    setMethod(methodName);
+
 
                 } else {
 
                     System.out.println("Function name: " + methodName + "  |  Object Name : " + objectName);
+                    setFunctionFound(true);
+                    setFunctionName(methodName);
 
                 }
                 return true;
             }
         }
         return false;
+    }
+
+    public void ResetVariables(){
+        this.setFunctionName("");
+        this.setMethod("");
+        this.setFunctionFound(false);
+        this.setMethodFound(false);
     }
 }
