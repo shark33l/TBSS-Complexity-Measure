@@ -104,41 +104,35 @@ public class NestedControlStructureController {
     }
     
     //Display Output
-//     public void displayOutput() throws IOException {
+    public void displayOutput() throws IOException {
 
-//         String line;
-//         ArrayList<String> lines = new ArrayList<>();
-//         String fileName = "/home/cal/TBSS-Complexity-Measure/src/FibonacciMain.java";
-//         int pointsCount = 0;
+        String line;
+        ArrayList<String> lines = new ArrayList<>();
+        String fileName = "code.java";
+        int pointsCount = 0;
 
-//         //Adding a file
-//         FileReader file = new FileReader(fileName);
+        //Adding a file
+        FileReader file = new FileReader(fileName);
 
-//         //Reading the file
-//         BufferedReader br = new BufferedReader(file);
+        //Reading the file
+        BufferedReader br = new BufferedReader(file);
 
-//         while((line = br.readLine())!= null) {
-//             lines.add(line);
-//         }
+        while((line = br.readLine())!= null) {
+            lines.add(line);
+        }
         
-//         NestedControlStructureController cnc = new NestedControlStructureController(lines);
-//         ArrayList<Integer> cncCount = cnc.returnCncValues();
+        NestedControlStructureController cnc = new NestedControlStructureController(lines);
+        ArrayList<Integer> cncCount = cnc.returnCncValues();
 
-//         System.out.println("");
-//         for(int i = 0; i < lines.size() ; i++){
-//             System.out.println("Line " + i + "\t\t " + lines.get(i) );
-//         }
+        System.out.println("");
 
-//         System.out.println("\n***********Calculating the Cnc Count For Each Line******************");
-//         System.out.println("");
+        for(int i = 0; i < lines.size() ; i++){
+            System.out.println("Line " + i + " Cnc count = " +cncCount.get(i) );
+        }
 
-//         for(int i = 0; i < lines.size() ; i++){
-//             System.out.println("Line " + i + " Cnc count = " +cncCount.get(i) );
-//         }
-
-//         System.out.println("Total Cnc Count = " +cnc.calculateTotalCnc());
-//         System.out.println("");
-//     }
+        System.out.println("Total Cnc Count = " +cnc.calculateTotalCnc());
+        System.out.println("");
+    }
 
 
 
