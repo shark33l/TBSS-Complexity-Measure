@@ -155,7 +155,7 @@ public class ControlStructuresController {
         System.out.println("");
         
         for(int i = 0; i < lines.size() ; i++){
-            System.out.println("Line " + i + " Ctc count = " +ctcCount.get(i) );
+            System.out.println("Line " + (i+1) + " Ctc count = " +ctcCount.get(i) );
         }
         
         System.out.println("Total Ctc Count = " +ctc.calculateTotalCtc());
