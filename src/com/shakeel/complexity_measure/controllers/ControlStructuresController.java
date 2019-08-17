@@ -129,6 +129,43 @@ public class ControlStructuresController {
 
         return totalCtc;
     }
+    
+    //Display Output
+//     public void displayOutput() throws IOException {
+
+//         String line;
+//         ArrayList<String> lines = new ArrayList<>();
+//         String fileName = "/home/cal/TBSS-Complexity-Measure/src/FibonacciMain.java";
+//         int pointsCount = 0;
+
+//         //Adding a file
+//         FileReader file = new FileReader(fileName);
+
+//         //Reading the file
+//         BufferedReader br = new BufferedReader(file);
+
+//         while((line = br.readLine())!= null) {
+//             lines.add(line);
+
+//         }
+//         ControlStructuresController ctc = new ControlStructuresController(lines);
+
+//         ArrayList<Integer> ctcCount = ctc.returnCtcValues();
+
+//         for(int i = 0; i < lines.size() ; i++){
+//             System.out.println("Line" + i + "\t\t " + lines.get(i));
+//         }
+
+//         System.out.println("\n***********Calculating the Ctc Count For Each Line******************");
+//         System.out.println("");
+        
+//         for(int i = 0; i < lines.size() ; i++){
+//             System.out.println("Line " + i + " Ctc count = " +ctcCount.get(i) );
+//         }
+        
+//         System.out.println("Total Ctc Count = " +ctc.calculateTotalCtc());
+//         System.out.println("");
+//     }
 
 
 
