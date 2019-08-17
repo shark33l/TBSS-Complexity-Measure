@@ -19,7 +19,7 @@ public Mountain(int dev, Point p1, Point p2, Point p3) {
 @Override
 public String getTitle() {
 	return "Snett berg";
-}	
+}
 private void fractalTriangle(TurtleGraphics turtle, int order, int dev, Point p1, Point p2, Point p3, int level) {
 	if (order == 0) {
 		turtle.moveTo(p1.getX(), p1.getY());

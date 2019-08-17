@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         
         String line;
-        ArrayList<String> lines = new ArrayList<>();
+        ArrayList<String> fileLines = new ArrayList<>();
         String fileName = "code.java";
         //Adding a file
         FileReader file = new FileReader(fileName);
@@ -30,6 +30,11 @@ public class Main {
         //Reading the file
         BufferedReader br = new BufferedReader(file);
 //        String extension = FilenameUtils.getExtension(file);
+
+        while((line = br.readLine())!= null) {
+            fileLines.add(line);
+
+        }
 
         sizeComplexity.SizeComplexity cs = new sizeComplexity.SizeComplexity();
         ControlStructuresController ctc = new ControlStructuresController();
@@ -48,7 +53,6 @@ public class Main {
             System.out.println("\n***********Calculating the Ci Count of Each Line******************");
             ci.measureInheritanceComplexity();
             System.out.println("\n***********Calculating the Cr Count of Each Line******************");
-            cr.containsMethodCall(br.readLine());
 
         }else if(fileName.contains(".cpp")){
             System.out.println("\n***********Calculating the Cs Count of Each Line******************");
@@ -77,7 +81,7 @@ public class Main {
         RecursiveController recursiveController = new RecursiveController();
 
         //Output Table Format
-        String format = "| %1$-6s | %2$-75s | %3$-30s | %4$-30s | %5$-15s |\n";
+        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$6.6s | %7$6.6s |\n";
 
 
         //Test Code Lines
@@ -95,7 +99,7 @@ public class Main {
                         "reader.close()"
                 };
 
-        for (String codeLine : testLines){
+        for (String codeLine : fileLines){
             lineCount++;
             recursionModel = recursiveController.recursionSetter(lineCount, codeLine, methodList);
             if(recursionModel.getMethod()){
@@ -115,19 +119,27 @@ public class Main {
 
         //Output Table Padding and Header
         System.out.println();
-        System.out.format(format, "------", "--------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------");
-        System.out.format(format, "Line #", "Line", "Method Name", "Function Name", "Is Recursive");
-        System.out.format(format, "------", "--------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------");
+        System.out.format(format, "Line #", "Line", "Method Name", "Function Name", "Is Recursive", "Ctc", "Cnc");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------");
 
         //Output Table data
         for (RecursionIdentifierModel recursionIdentifierModel : recursionModelList){
 
+            if(recursionIdentifierModel.getLine().contains("\t")){
+                line = recursionIdentifierModel.getLine().replace("\t", "   ");
+            } else {
+                line = recursionIdentifierModel.getLine();
+            }
+
             System.out.format(format,
                     recursionIdentifierModel.getLineNo(),
-                    recursionIdentifierModel.getLine(),
+                    line,
                     recursionIdentifierModel.getMethodName(),
                     recursionIdentifierModel.getFunctionName(),
-                    recursionIdentifierModel.getVisited());
+                    recursionIdentifierModel.getVisited(),
+                    ctc.calculateCtcForLine(line),
+                    cnc.calculateCncForLine(line));
 
         }
 

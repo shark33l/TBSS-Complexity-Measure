@@ -50,6 +50,42 @@ public class NestedControlStructureController {
         }
     }
 
+    public int calculateCncForLine(String line){
+        Pattern pattern1 = Pattern.compile(openBracketsChecking);
+        Pattern pattern2 = Pattern.compile(closeBracketEmptyLineChecking);
+        Pattern pattern3 = Pattern.compile(closeBracketChecking);
+        Pattern pattern4 = Pattern.compile(elseBracketChecking);
+
+            int pointsCount = 0;
+
+            //Checking for nested control structures
+            Matcher matcher1 = pattern1.matcher(line);
+            while (matcher1.find()){
+                addBracket();
+            }
+            pointsCount = brackets;
+
+            //Checking for close bracket or empty line
+            Matcher matcher2 = pattern2.matcher(line);
+            if (matcher1.find()){
+                pointsCount = 0;
+            }
+
+            //Checking for close bracket
+            Matcher matcher3 = pattern3.matcher(line);
+            while (matcher3.find()){
+                removeBracket();
+            }
+
+            //Checking for else open bracket
+            Matcher matcher4 = pattern4.matcher(line);
+            if (matcher4.find()){
+                addBracket();
+            }
+
+        return pointsCount;
+    }
+
     //Calculate Ctc value for each line
     public void calculateLineByLine(){
 

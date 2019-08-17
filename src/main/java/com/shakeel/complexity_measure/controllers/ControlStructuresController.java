@@ -108,6 +108,16 @@ public class ControlStructuresController {
         return pointsCount;
     }
 
+    //Calculate Ctc for a Line
+    public int calculateCtcForLine(String line){
+        int conditional_Count = conditionalCount(line);
+        int iterative_Count = iterativeCount(line);
+        int catch_Count = catchCount(line);
+        int case_Count = caseCount(line);
+
+        return (conditional_Count + iterative_Count + catch_Count + case_Count);
+    }
+
     //Calculate Ctc value for each line
     public void calculateLineByLine(){
         for(int i = 0; i < lines.size(); i++){
