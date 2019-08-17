@@ -13,6 +13,50 @@ public class Main {
 
 
     public static void main(String[] args) {
+        
+        String line;
+        ArrayList<String> lines = new ArrayList<>();
+        String fileName = "code.java";
+        //Adding a file
+        FileReader file = new FileReader(fileName);
+
+        //Reading the file
+        BufferedReader br = new BufferedReader(file);
+//        String extension = FilenameUtils.getExtension(file);
+
+        SizeComplexity cs = new SizeComplexity();
+        ControlStructuresController ctc = new ControlStructuresController();
+        NestedControlStructureController cnc = new NestedControlStructureController();
+        InheritanceController ci = new InheritanceController();
+        RecursionIdentifier cr = new RecursionIdentifier();
+        
+
+        if (fileName.contains(".java")) {
+            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
+            cs.measureSize();
+            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
+            ctc.displayOutput();
+            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
+            cnc.displayOutput();
+            System.out.println("\n***********Calculating the Ci Count of Each Line******************");
+            ci.measureInheritanceComplexity();
+            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
+            cr.containsMethodCall(br.readLine());
+
+        }else if(fileName.contains(".cpp")){
+            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
+
+            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
+            ctc.displayOutput();
+            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
+            cnc.displayOutput();
+            System.out.println("\n***********Calculating the Ci Count of Each Line******************");
+            ci.measureInheritanceComplexity();
+            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
+
+        }else{
+            System.out.println("The input file type is not supported!");
+        }
 
         IfRecursionIdentifier ifRecursionIdentifier = new IfRecursionIdentifier();
         RecursionIdentifier recursionIdentifier = new RecursionIdentifier();
