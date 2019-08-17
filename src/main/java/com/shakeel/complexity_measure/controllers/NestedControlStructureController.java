@@ -1,5 +1,8 @@
 package com.shakeel.complexity_measure.controllers;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -20,7 +23,10 @@ public class NestedControlStructureController {
     String closeBracketChecking = "\\}";
     //Regular expression for else open bracket
     String elseBracketChecking = "\\b((else)(.*\\{))";
-    
+
+    public NestedControlStructureController(){
+    }
+
     public NestedControlStructureController(ArrayList<String> lines){
         this.lines = lines;
         cncCount = new ArrayList<Integer>(lines.size());

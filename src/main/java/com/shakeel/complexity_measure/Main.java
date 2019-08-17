@@ -1,10 +1,14 @@
 package com.shakeel.complexity_measure;
 
+import com.shakeel.complexity_measure.controllers.ControlStructuresController;
+import com.shakeel.complexity_measure.controllers.InheritanceController;
+import com.shakeel.complexity_measure.controllers.NestedControlStructureController;
 import com.shakeel.complexity_measure.controllers.RecursiveController;
-import com.shakeel.complexity_measure.identifiers.IfRecursionIdentifier;
 import com.shakeel.complexity_measure.identifiers.RecursionIdentifier;
 import com.shakeel.complexity_measure.model.RecursionIdentifierModel;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +19,7 @@ import java.util.regex.Pattern;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         
         String line;
         ArrayList<String> lines = new ArrayList<>();
@@ -27,7 +31,7 @@ public class Main {
         BufferedReader br = new BufferedReader(file);
 //        String extension = FilenameUtils.getExtension(file);
 
-        SizeComplexity cs = new SizeComplexity();
+        sizeComplexity.SizeComplexity cs = new sizeComplexity.SizeComplexity();
         ControlStructuresController ctc = new ControlStructuresController();
         NestedControlStructureController cnc = new NestedControlStructureController();
         InheritanceController ci = new InheritanceController();

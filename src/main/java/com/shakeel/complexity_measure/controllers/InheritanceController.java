@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InheritanceController {
-    public static final String SOURCE_CODE_PATH = "C:/Users/sasmini_112033/Documents/SPM/TBSS-Complexity-Measure/code.java";
+    public static final String SOURCE_CODE_PATH = "code.java";
     public static final String TYPE = "java";
 
    public void measureInheritanceComplexity() throws Exception{

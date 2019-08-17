@@ -1,5 +1,8 @@
 package com.shakeel.complexity_measure.controllers;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +24,9 @@ public class ControlStructuresController {
     String logicalOperatorsChecking = "(\\||\\&&)";
     //Regular Expression for checking bitwise operators
     String bitwiseOperatorsChecking = "(\\|\\&)";
+
+    public ControlStructuresController(){
+    }
 
     public ControlStructuresController(ArrayList<String> lines){
         this.lines  = lines;
@@ -129,8 +135,9 @@ public class ControlStructuresController {
 
         return totalCtc;
     }
-    
+
     //Display Output
+
     public void displayOutput() throws IOException {
 
         String line;

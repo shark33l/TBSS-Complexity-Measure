@@ -14,7 +14,7 @@ public class SizeComplexity  {
 	
 	public void measureSize() throws Exception{
 			
-		FileReader file=new FileReader("C:/Users/Telan Rishan/Downloads/test.txt");
+		FileReader file=new FileReader("code.java");
 		BufferedReader reader=new BufferedReader(file);
 		
 		//this.classElements(this.getClass(),1);
