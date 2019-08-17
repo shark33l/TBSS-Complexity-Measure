@@ -127,7 +127,7 @@ public class NestedControlStructureController {
         System.out.println("");
 
         for(int i = 0; i < lines.size() ; i++){
-            System.out.println("Line " + i + " Cnc count = " +cncCount.get(i) );
+            System.out.println("Line " + (i+1) + " Cnc count = " +cncCount.get(i) );
         }
 
         System.out.println("Total Cnc Count = " +cnc.calculateTotalCnc());
