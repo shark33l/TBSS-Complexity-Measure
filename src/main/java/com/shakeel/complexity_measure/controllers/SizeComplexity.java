@@ -8,16 +8,25 @@ public class SizeComplexity  {
 
 	
 	private int Cs=0;
-	private String[] ch= {"+","rishan"};
-	private String[] ch2= {"Tikiri",">>"};
+	private String[] Arithmetic= {"+","-","*","/","%","++","--"};
+	private String[] Relation= {"==","!=",">","<",">=","<="};
+	private String[] Logical= {"&&","||","!"};
+	private String[] Bitwise= {"|","^","~","<<",">>",">>>","<<<"};
+	private String[] Miscellaneous= {",","->",".","::"};
+	private String[] Assignment= {"+=","-=","*=","/=","=",">>>=","|=","&=","%=","<<=",">>=","^="};
+	private String[] Keywords= {"void","double","int","long","float","String"};
+	private String[] KeywordsOther= {"printf","println","cout","cin","if","for","while","do-while","switch","case"};
+	private String[] Manipulators= {"endl","\n","\""};
+	
+	private String[] Keywords2= {"new","delete","throws"};
 	
 	
 	public void measureSize() throws Exception{
 			
-		FileReader file=new FileReader("code.java");
+		FileReader file=new FileReader("C:/Users/Telan Rishan/Downloads/test.txt");
 		BufferedReader reader=new BufferedReader(file);
 		
-		//this.classElements(this.getClass(),1);
+		//this.classElements(testclass.class,1);
 		
 		String CurrentLine="",line;
 		int numericals=0;
@@ -25,13 +34,19 @@ public class SizeComplexity  {
 		while((line = reader.readLine())!= null) {
 			
 			CurrentLine=line;
-				
-
 			numericals=line.replaceAll("[^0-9]","").length();
-			
+			Cs+=numericals;
 				
-			detectChar(CurrentLine,ch,1);
-			//detectChar(CurrentLine,ch2,2);
+			detectChar(CurrentLine,Arithmetic,1);
+			detectChar(CurrentLine,Relation,1);
+			detectChar(CurrentLine,Logical,1);
+			detectChar(CurrentLine,Bitwise,1);
+			detectChar(CurrentLine,Miscellaneous,1);
+			detectChar(CurrentLine,Assignment,1);
+			detectChar(CurrentLine,Keywords,1);
+			detectChar(CurrentLine,Manipulators,1);
+			detectChar(CurrentLine,Keywords2,2);
+			detectChar(CurrentLine, KeywordsOther, 1);
 			
 		}
 		
@@ -41,12 +56,18 @@ public class SizeComplexity  {
 	public void detectChar(String CurrentLine,String ch[],int val) throws Exception {
 		
 		for(String k:ch) {
+			
+			if(ch==Keywords) {
+				patternM(CurrentLine,k,val,true);
+			}
+			
 			if(k.length()<=1) {		
 				singleChar(CurrentLine,k,val);		
 			}else {		
-				patternM(CurrentLine,k,val);		 
+				patternM(CurrentLine,k,val,false);		 
 			}
-		}	
+		}
+		
 	}
 	
 	public void singleChar(String str,String ch,int val) throws Exception{
@@ -75,23 +96,23 @@ public class SizeComplexity  {
 				}
 							
 				str=str.substring((str.indexOf(ch)));
-					System.out.println(str);	
+					System.out.println("yeehaa "+str);	
 				if(str.length()==1) {
 					this.Cs+=val;
 					break;
 				}else if((str.charAt(str.indexOf(ch)+1)==ch.charAt(0)) || str.charAt(str.indexOf(ch)+1)=='='){
 					
 					str=str.substring((str.indexOf(ch)+2));
-					
+					System.out.println("kolike"+str);
 					if(str.length()==0) {
 						break;
-					}else if((ch==">" || ch=="<") && (str.charAt(str.indexOf(ch))==ch.charAt(0))) {
-					
+					}else if((ch==">" || ch=="<") && (str.charAt(0)==ch.charAt(0))) {
+						
 						str=str.substring((str.indexOf(ch)+1));
 					}if(str.length()==0) {
 						break;
 					}
-					
+				
 				}else {
 					this.Cs+=val;
 					str=str.substring((str.indexOf(ch)+1));
@@ -99,7 +120,7 @@ public class SizeComplexity  {
 			}		
 	}
 	
-	public void patternM(String str,String ptn,int val) {
+	public void patternM(String str,String ptn,int val,boolean keyword) {
 
 		char[] s=str.toCharArray();
 		char[] p=ptn.toCharArray();
@@ -120,16 +141,23 @@ public class SizeComplexity  {
 			 }
 			 
 			 if(flag==true) {
-				  			 	 
-				 if((i!=0 && str.toString().substring(i,i+LP).equals(">=")) || (i!=0 && str.toString().substring(i,i+LP).equals("<="))){
+				 
+				 if(keyword==true){
+					 
+					String x=str.toString().substring(i+LP+1,i+LP+2);
+					
+					if(x.matches("[a-zA-Z]")) {
+						 this.Cs++;
+					}
+					
+					 
+				 }else if((i!=0 && str.toString().substring(i,i+LP).equals(">=")) || (i!=0 && str.toString().substring(i,i+LP).equals("<="))){
 					 
 					 if(str.toString().charAt(i-1)=='>' || str.toString().charAt(i-1)=='<') {
 						 continue;
 					 }
-				 }
-				 			 
-				 if(str.toString().substring(i,i+LP).equals(">>") || str.toString().substring(i,i+LP).equals("<<")){
-					 
+				 }else if(str.toString().substring(i,i+LP).equals(">>") || str.toString().substring(i,i+LP).equals("<<")){
+					
 					 if(str.toString().charAt(i+LP)=='=' || str.toString().charAt(i+LP)=='>' || str.toString().charAt(i+LP)=='<') {
 						 
 						 flag=false;
@@ -142,9 +170,11 @@ public class SizeComplexity  {
 					 
 					 flag=false;
 					 
-				 }else {			 
+				
+				 }else{	
+					 
 					 this.Cs+=val;
-				 }
+				}
 			 }
 		 }    	
 	 }		
@@ -160,7 +190,7 @@ public class SizeComplexity  {
 		
 		for(Method m:method) {
 			System.out.println("method = " + m.toString());
-			patternM(m.toString(), "throws",val);
+			//patternM(m.toString(), "throws",val);
 		}	
 	}
 }
