@@ -3,51 +3,65 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class SizeComplexity  {
+public class SizeComplexity7  {
 
-	
 	private int Cs=0;
-	private String[] Arithmetic= {"+","-","*","/","%","++","--"};
-	private String[] Relation= {"==","!=",">","<",">=","<="};
-	private String[] Logical= {"&&","||","!"};
-	private String[] Bitwise= {"|","^","~","<<",">>",">>>","<<<"};
-	private String[] Miscellaneous= {",","->",".","::"};
-	private String[] Assignment= {"+=","-=","*=","/=","=",">>>=","|=","&=","%=","<<=",">>=","^="};
+	private String[] Arithmetic= {"+","-","*","/","%","=","|",".",">"};
 	private String[] Keywords= {"void","double","int","long","float","String"};
-	private String[] KeywordsOther= {"printf","println","cout","cin","if","for","while","do-while","switch","case"};
-	private String[] Manipulators= {"endl","\n","\""};
+	private String[] KeywordsOther= {"printf","println","cout","cin","if","for","while","do-while","switch","case","System","out"};
+	private String[] Manipulators= {"endl","\n"};
+	private boolean flag=false;
 	
-	private String[] Keywords2= {"new","delete","throws"};
-	
-	
+	//private String[] Keywords2= {"new","delete","throws"};
+	private ArrayList<String> var=new ArrayList<>();
+	 
 	public void measureSize() throws Exception{
 			
 		FileReader file=new FileReader("C:/Users/Telan Rishan/Downloads/test.txt");
 		BufferedReader reader=new BufferedReader(file);
 		
-		//this.classElements(testclass.class,1);
-		
 		String CurrentLine="",line;
-		int numericals=0;
 		
 		while((line = reader.readLine())!= null) {
 			
 			CurrentLine=line;
-			numericals=line.replaceAll("[^0-9]","").length();
-			Cs+=numericals;
+			
+			if(flag==true) {
+				if(CurrentLine.indexOf("*/") != -1) {
+					CurrentLine=CurrentLine.substring(CurrentLine.indexOf("*/"),CurrentLine.length());
+					flag=false;		
+				}else {
+					continue;
+				}		
+			}else {
 				
+				if(CurrentLine.indexOf("/*") != -1) {	
+					CurrentLine=CurrentLine.substring(0,CurrentLine.indexOf("/*"));
+					flag=true;
+					continue;
+				}	
+			}
+			
+			if(CurrentLine.indexOf("//") != -1) {
+				CurrentLine=CurrentLine.substring(0,CurrentLine.indexOf("//"));
+			}
+			
+			regexChecker(CurrentLine, "dd", 1);
 			detectChar(CurrentLine,Arithmetic,1);
-			detectChar(CurrentLine,Relation,1);
-			detectChar(CurrentLine,Logical,1);
-			detectChar(CurrentLine,Bitwise,1);
-			detectChar(CurrentLine,Miscellaneous,1);
-			detectChar(CurrentLine,Assignment,1);
 			detectChar(CurrentLine,Keywords,1);
+			//detectChar(CurrentLine,Keywords2,2);
 			detectChar(CurrentLine,Manipulators,1);
-			detectChar(CurrentLine,Keywords2,2);
 			detectChar(CurrentLine, KeywordsOther, 1);
 			
+			for(String k:var) {
+				regexCheckerKeyword(CurrentLine,k,1,false);
+			}
+			
+			System.out.println("");
 		}
 		
 		System.out.println("Result :"+this.Cs);	
@@ -58,139 +72,65 @@ public class SizeComplexity  {
 		for(String k:ch) {
 			
 			if(ch==Keywords) {
-				patternM(CurrentLine,k,val,true);
-			}
-			
-			if(k.length()<=1) {		
-				singleChar(CurrentLine,k,val);		
+				regexCheckerKeyword(CurrentLine,k,val,true);
+			}else if(k.length()<=1) {		
+				regexChecker(CurrentLine,k,val);	
 			}else {		
-				patternM(CurrentLine,k,val,false);		 
-			}
-		}
-		
-	}
-	
-	public void singleChar(String str,String ch,int val) throws Exception{
-			
-			str = str.replace(" ","");
-				
-			while(str.indexOf(ch) != -1) {
-				
-				if(ch=="\"") {		
-					while(str.indexOf(ch)!=-1) {
-						str=str.substring(str.indexOf(ch)+1);
-						
-						while(str.indexOf(ch)!=-1) {
-							
-							if(str.charAt(0)==ch.charAt(0)) {
-								str=str.substring(str.indexOf(ch)+1);
-								break;
-							}
-							
-							str=str.substring(str.indexOf(ch)+1);
-							this.Cs+=val;
-							break;		
-						}
-					}
-					break;
-				}
-							
-				str=str.substring((str.indexOf(ch)));
-					System.out.println("yeehaa "+str);	
-				if(str.length()==1) {
-					this.Cs+=val;
-					break;
-				}else if((str.charAt(str.indexOf(ch)+1)==ch.charAt(0)) || str.charAt(str.indexOf(ch)+1)=='='){
-					
-					str=str.substring((str.indexOf(ch)+2));
-					System.out.println("kolike"+str);
-					if(str.length()==0) {
-						break;
-					}else if((ch==">" || ch=="<") && (str.charAt(0)==ch.charAt(0))) {
-						
-						str=str.substring((str.indexOf(ch)+1));
-					}if(str.length()==0) {
-						break;
-					}
-				
-				}else {
-					this.Cs+=val;
-					str=str.substring((str.indexOf(ch)+1));
-				}		
+				regexCheckerKeyword(CurrentLine,k,val,false);		 
 			}		
+		}		
 	}
 	
-	public void patternM(String str,String ptn,int val,boolean keyword) {
-
-		char[] s=str.toCharArray();
-		char[] p=ptn.toCharArray();
-	     
-		int LS=s.length;
-		int LP=p.length;
-		int max=(LS-LP+1);
-		boolean flag;
+	public void regexCheckerKeyword(String str,String ch,int val,boolean keyword) {
+		
+		String variable = "";
+		Pattern p;
+		Matcher m;
+		
+		if(keyword==true) {
+			p = Pattern.compile("[\\s+\\(?\\{?]"+ch+"\\s+[A-Za-z]+");
+	        	m = p.matcher(str);
+		}else {
+			p = Pattern.compile(ch);
+	        	m = p.matcher(str);
+		}
 		 
-		 for(int i=0;i<max;i++) {
-			 flag=true;
-			 
-			 for(int j=1;j<=LP && flag==true;j++) {
-				 
-				 if(p[j-1]!=s[j+i-1]) {
-					 flag=false;
-				 }		 
-			 }
-			 
-			 if(flag==true) {
-				 
-				 if(keyword==true){
-					 
-					String x=str.toString().substring(i+LP+1,i+LP+2);
-					
-					if(x.matches("[a-zA-Z]")) {
-						 this.Cs++;
-					}
-					
-					 
-				 }else if((i!=0 && str.toString().substring(i,i+LP).equals(">=")) || (i!=0 && str.toString().substring(i,i+LP).equals("<="))){
-					 
-					 if(str.toString().charAt(i-1)=='>' || str.toString().charAt(i-1)=='<') {
-						 continue;
-					 }
-				 }else if(str.toString().substring(i,i+LP).equals(">>") || str.toString().substring(i,i+LP).equals("<<")){
-					
-					 if(str.toString().charAt(i+LP)=='=' || str.toString().charAt(i+LP)=='>' || str.toString().charAt(i+LP)=='<') {
-						 
-						 flag=false;
-						 i++;
-					 }else {				 
-						 this.Cs+=val;
-					 }
-					 	 
-				 }else if(str.toString().substring(i,i+LP).equals(">>>") && str.toString().charAt(i+LP)=='='){
-					 
-					 flag=false;
-					 
-				
-				 }else{	
-					 
-					 this.Cs+=val;
-				}
-			 }
-		 }    	
-	 }		
-
-	public void classElements(Class c,int val) {
-		    
-		Field[] field = c.getDeclaredFields();
-		Method[] method = c.getDeclaredMethods();
-			    
-		for(Field f:field) {
-			System.out.println("method = " + f.toString());
+        	while(m.find()) {
+        	 
+        	System.out.print(m.group().replaceAll("[^A-Za-z]", "").substring(0,ch.length()).trim()+", ");
+        	this.Cs+=val;  
+        	  	
+        		if(keyword==true) {
+        		
+        		variable=m.group().substring(ch.length()+1).trim();
+        		
+    				if(!var.contains(variable)) {
+    					var.add(variable);
+    					//System.out.print("(added variable:"+variable+")");
+    				}
+        		}
+        	}
+	}
+	
+	public void regexChecker(String str,String ch,int val) throws Exception{
+		
+		Pattern p;
+		Matcher m;
+		
+		if(ch=="dd") {
+			p = Pattern.compile("\\d+|\\\"([^\\\"]*)\\\"");
+	        	m = p.matcher(str);
+		}else if(ch=="="){
+			p = Pattern.compile("[\\s\\d\\w][\\=]+");
+	       		m = p.matcher(str);
+		}else{
+			p = Pattern.compile("\\"+ch+"+.");
+	        	m = p.matcher(str);
 		}
 		
-		for(Method m:method) {
-			System.out.println("method = " + m.toString());
-			//patternM(m.toString(), "throws",val);
-		}	
+        	while(m.find()) {	
+			System.out.print(m.group()+", ");
+			this.Cs+=val; 
+        	}  
 	}
 }
