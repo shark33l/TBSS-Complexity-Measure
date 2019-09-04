@@ -42,7 +42,6 @@ public class SizeComplexity7  {
 				if(CurrentLine.indexOf("/*") != -1) {	
 					CurrentLine=CurrentLine.substring(0,CurrentLine.indexOf("/*"));
 					flag=true;
-					continue;
 				}	
 			}
 			
