@@ -8,6 +8,7 @@ public class RecursionIdentifierModel {
     private String functionName;
     private Boolean isMethod;
     private Boolean visited;
+    private String checkReadMethod;
     private int countCr;
 
 //
@@ -84,5 +85,13 @@ public class RecursionIdentifierModel {
 
     public void setMethod(Boolean method) {
         isMethod = method;
+    }
+
+    public String getCheckReadMethod() {
+        return checkReadMethod;
+    }
+
+    public void setCheckReadMethod(String checkReadMethod) {
+        this.checkReadMethod = checkReadMethod;
     }
 }

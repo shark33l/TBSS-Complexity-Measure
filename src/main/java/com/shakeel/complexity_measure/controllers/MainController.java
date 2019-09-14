@@ -1,9 +1,11 @@
 package com.shakeel.complexity_measure.controllers;
+import com.shakeel.complexity_measure.calculations.ComplexityCalculations;
 import com.shakeel.complexity_measure.controllers.ControlStructuresController;
 import com.shakeel.complexity_measure.controllers.InheritanceController;
 import com.shakeel.complexity_measure.controllers.NestedControlStructureController;
 import com.shakeel.complexity_measure.controllers.RecursiveController;
 import com.shakeel.complexity_measure.identifiers.RecursionIdentifier;
+import com.shakeel.complexity_measure.model.ComplexityModel;
 import com.shakeel.complexity_measure.model.RecursionIdentifierModel;
 
 import java.io.BufferedReader;
@@ -22,6 +24,8 @@ import java.util.stream.Stream;
 
 public class MainController {
 
+    ComplexityModel complexityModel = new ComplexityModel();
+    ComplexityCalculations complexityCalculations = new ComplexityCalculations();
 
     public void fileRead(String path, String fileNameOnly) throws Exception{
 
@@ -115,24 +119,12 @@ public class MainController {
         // Saving all Inheritance Count
         int ciCount[] = ci.printCi(path);
 
+        // Checking recursionMethods
+        String currentMethodName = "";
+
+
         //Output Table Format
-        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$-30s | %7$6.6s | %8$6.6s | %9$6.6s | %10$6.6s |\n";
-
-
-        //Test Code Lines
-        String[] testLines =
-                {
-                        "if (6+1 == 7) { a - b = a; +-b = b}  a++;",
-                        "}else {",
-                        "+++}",
-                        "return functionName2.function();",
-                        "public void ifRecursionMethod(String codeLine) throws ParseException { ",
-                        "return functionName2.ifRecursionMethod();}",
-                        "public void addBracket() {",
-                        "        brackets++;",
-                        "    }",
-                        "reader.close()"
-                };
+        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$-30s | %7$-30s | %8$6.6s | %9$6.6s | %10$6.6s | %11$6.6s |\n";
 
         for (String codeLine : fileLines){
             lineCount++;
@@ -154,9 +146,9 @@ public class MainController {
 
         //Output Table Padding and Header
         System.out.println();
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------",  "------------------------------","------", "------", "------", "------");
-        System.out.format(format, "Line #", "Line", "Declared Method Name", "Called Method Name", "Is Recursive", "Cs Tokens", "Cs", "Ctc", "Cnc", "Ci");
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------",  "------------------------------","------", "------", "------", "------");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------------------------------", "------------------------------","------", "------", "------", "------");
+        System.out.format(format, "Line #", "Line", "Declared Method Name", "Called Method Name", "Is Recursive", "Method Starts", "Cs Tokens", "Cs", "Ctc", "Cnc", "Ci");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------------------------------", "------------------------------","------", "------", "------", "------");
 
         //Output Table data
         for (RecursionIdentifierModel recursionIdentifierModel : recursionModelList){
@@ -184,19 +176,57 @@ public class MainController {
                 }
             }
 
+            int lineNo = recursionIdentifierModel.getLineNo();
+            String methodName = recursionIdentifierModel.getMethodName();
+            String functionName = recursionIdentifierModel.getFunctionName();
+            Boolean isVisited = recursionIdentifierModel.getVisited();
+            String checkMethodRead = recursionIdentifierModel.getCheckReadMethod();
+            int countCs = cs.measureSize(line).size();
+            int countCtc = ctc.calculateCtcForLine(line);
+            int countCnc = cnc.calculateCncForLine(line);
+            int countCi = ciCount[lineNo - 1];
+            int countTw = complexityCalculations.totalComplexity(countCtc, countCnc, countCi);
+            int countCps = complexityCalculations.complexityStatementCps(countTw, countCs);
+            int countCr = 0;
+
+            if(methodName.length() > 0 && isVisited){
+                currentMethodName = methodName;
+            } else if (currentMethodName.length() > 0){
+                if(currentMethodName == checkMethodRead){
+                    checkMethodRead = recursionIdentifierModel.getCheckReadMethod();
+                }else{
+                    checkMethodRead = null;
+                }
+            }else{
+                checkMethodRead = null;
+            }
+
+            if(checkMethodRead != null){
+
+                countCr = countCps * 2;
+                complexityCalculations.complexityProgramCp(countCps, countCr);
+
+            }
+
+
             System.out.format(format,
-                    recursionIdentifierModel.getLineNo(),
+                    lineNo,
                     line,
-                    recursionIdentifierModel.getMethodName(),
-                    recursionIdentifierModel.getFunctionName(),
-                    recursionIdentifierModel.getVisited(),
+                    methodName,
+                    functionName,
+                    isVisited,
+                    checkMethodRead,
                     tokenString,
-                    cs.measureSize(line).size(),
-                    ctc.calculateCtcForLine(line),
-                    cnc.calculateCncForLine(line),
-                    ciCount[recursionIdentifierModel.getLineNo() - 1]);
+                    countCs,
+                    countCtc,
+                    countCnc,
+                    countCi
+            );
 
         }
+
+        //Adding to Complexity Model
+
 
 
     }

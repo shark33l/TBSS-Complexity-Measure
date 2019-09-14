@@ -9,6 +9,7 @@ public class RecursiveController {
 
 
     RecursionIdentifier recursionIdentifier = new RecursionIdentifier();
+    String currentMethodName;
 
     public RecursionIdentifierModel recursionSetter(int lineNo, String codeLine, ArrayList<String> methodList){
 
@@ -19,12 +20,17 @@ public class RecursiveController {
         if(recursionIdentifier.getMethodFound()){
             recursionIdentifierModel.setMethodName(recursionIdentifier.getMethod());
             recursionIdentifierModel.setMethod(true);
+            currentMethodName = recursionIdentifier.getMethod();
         }
         //If it's function save it separately
         else if(recursionIdentifier.getFunctionFound()){
             recursionIdentifierModel.setFunctionName(recursionIdentifier.getFunctionName());
             recursionIdentifierModel.setVisited(this.checkIfRecursive(methodList, recursionIdentifier.getFunctionName())); //Call recursive checker method
         }
+        if(recursionIdentifier.getBrackets() > 0){
+            recursionIdentifierModel.setCheckReadMethod(currentMethodName);
+        }
+        recursionIdentifierModel.setCountCr(recursionIdentifier.getBrackets());
 
         recursionIdentifier.ResetVariables();
         return recursionIdentifierModel;

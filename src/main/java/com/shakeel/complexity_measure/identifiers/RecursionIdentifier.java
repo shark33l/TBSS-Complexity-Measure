@@ -20,6 +20,10 @@ public class RecursionIdentifier {
     Boolean methodFound;
     Boolean functionFound;
 
+    //Check for Brackets
+    int brackets = 0;
+    Boolean startCountBrackets = false;
+
     public RecursionIdentifier() {
 
         this.method = "";
@@ -61,6 +65,22 @@ public class RecursionIdentifier {
         this.functionFound = functionFound;
     }
 
+    public int getBrackets() {
+        return brackets;
+    }
+
+    public void setBrackets(int brackets) {
+        this.brackets = brackets;
+    }
+
+    public Boolean getStartCountBrackets() {
+        return startCountBrackets;
+    }
+
+    public void setStartCountBrackets(Boolean startCountBrackets) {
+        this.startCountBrackets = startCountBrackets;
+    }
+
     //After these Java keywords may come an opening parenthesis.
     private static List<String> keyWordsBeforeParens =
             Arrays.asList(
@@ -97,6 +117,8 @@ public class RecursionIdentifier {
             final String insideParens = matcher.group(2);
 
             if (keyWordsBeforeParens.contains(beforeParens)) {
+
+                checkForBrackets(codeLine);
 //                System.out.println("Keyword: " + beforeParens);
                 return containsMethodCall(insideParens);
             } else {
@@ -116,6 +138,7 @@ public class RecursionIdentifier {
 //                    System.out.println("Method Name : " + methodName);
                     setMethodFound(true);
                     setMethod(methodName);
+                    setStartCountBrackets(true);
 
 
                 } else {
@@ -125,9 +148,14 @@ public class RecursionIdentifier {
                     setFunctionName(methodName);
 
                 }
+
+                checkForBrackets(codeLine);
                 return true;
             }
         }
+
+        checkForBrackets(codeLine);
+
         return false;
     }
 
@@ -136,5 +164,32 @@ public class RecursionIdentifier {
         this.setMethod("");
         this.setFunctionFound(false);
         this.setMethodFound(false);
+    }
+
+    public void checkForBrackets(String codeLine){
+
+        String[] splitBracketArray;
+        String[] splitCloseBracketArray;
+
+        if(getStartCountBrackets()){
+            splitBracketArray = codeLine.split("(?=\\{)");
+
+            for(String splitString : splitBracketArray){
+                if(splitString.contains("{")){
+                    setBrackets(getBrackets() + 1);
+                }
+                if(splitString.contains("}")){
+                    splitCloseBracketArray = splitString.split("(?=\\})");
+                    for(String splitStringClose : splitCloseBracketArray){
+                        if(splitStringClose.contains("}")){
+                            setBrackets(getBrackets() - 1);
+                        }
+                    }
+                }
+            }
+        }
+        if(getBrackets() == 0){
+            setStartCountBrackets(false);
+        }
     }
 }
