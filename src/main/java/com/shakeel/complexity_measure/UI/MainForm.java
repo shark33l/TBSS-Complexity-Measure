@@ -46,6 +46,8 @@ public class MainForm extends JFrame{
         add(mainPanel);
         setTitle("Complexity Tool");
         setSize(1000, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         //Combo Box Strings
         String[] comboSelectionStrings = {"File", "Folder"};
