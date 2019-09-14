@@ -16,11 +16,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.shakeel.complexity_measure.controllers.InheritanceController.ciArray;
+
+
 public class Main {
 
-
+    public static final String SOURCE_CODE_PATH = "C:/Users/sasmini_112033/Desktop/TBSS-Complexity-Measure/code1.cpp";
+    public static int count = 0;
     public static void main(String[] args) throws Exception{
-        
+
         String line;
         ArrayList<String> fileLines = new ArrayList<>();
         String fileName = "code.java";
@@ -41,36 +45,9 @@ public class Main {
         NestedControlStructureController cnc = new NestedControlStructureController();
         InheritanceController ci = new InheritanceController();
         RecursionIdentifier cr = new RecursionIdentifier();
-        
-
-        if (fileName.contains(".java")) {
-            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
-            cs.measureSize();
-            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
-            ctc.displayOutput();
-            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
-            cnc.displayOutput();
-            System.out.println("\n***********Calculating the Ci Count of Each Line******************");
-            ci.measureInheritanceComplexity();
-            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
-
-        }else if(fileName.contains(".cpp")){
-            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
-
-            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
-            ctc.displayOutput();
-            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
-            cnc.displayOutput();
-            System.out.println("\n***********Calculating the Ci Count of Each Line******************");
-            ci.measureInheritanceComplexity();
-            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
-
-        }else{
-            System.out.println("The input file type is not supported!");
-        }
 
         int lineCount = 0;
-
+        int totLine = ci.countLines();
         //To push all Method Names to verify later
         ArrayList<String> methodList = new ArrayList<>();
 
@@ -81,7 +58,7 @@ public class Main {
         RecursiveController recursiveController = new RecursiveController();
 
         //Output Table Format
-        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$6.6s | %7$6.6s |\n";
+        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$6.6s | %7$6.6s | %8$6.6s |\n";
 
 
         //Test Code Lines
@@ -119,19 +96,19 @@ public class Main {
 
         //Output Table Padding and Header
         System.out.println();
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------");
-        System.out.format(format, "Line #", "Line", "Method Name", "Function Name", "Is Recursive", "Ctc", "Cnc");
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
+        System.out.format(format, "Line #", "Line", "Method Name", "Function Name", "Is Recursive", "Ctc", "Cnc", "Ci");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
 
         //Output Table data
         for (RecursionIdentifierModel recursionIdentifierModel : recursionModelList){
-
+            count++;
             if(recursionIdentifierModel.getLine().contains("\t")){
                 line = recursionIdentifierModel.getLine().replace("\t", "   ");
             } else {
                 line = recursionIdentifierModel.getLine();
             }
-
+            ciArray = ci.printCi(lineCount);
             System.out.format(format,
                     recursionIdentifierModel.getLineNo(),
                     line,
@@ -139,7 +116,8 @@ public class Main {
                     recursionIdentifierModel.getFunctionName(),
                     recursionIdentifierModel.getVisited(),
                     ctc.calculateCtcForLine(line),
-                    cnc.calculateCncForLine(line));
+                    cnc.calculateCncForLine(line),
+                    ciArray[count - 1]);
 
         }
 
