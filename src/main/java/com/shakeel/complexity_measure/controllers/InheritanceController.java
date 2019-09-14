@@ -33,7 +33,7 @@ public class InheritanceController {
 
         System.out.println("Number of lines: " + lines);
 
-        int ciArray[] = printCi(lines);
+        int ciArray[] = printCi(SOURCE_CODE_PATH);
         for (int i = 0; i < lines; i++) {
             System.out.println("Ci " + "line " + (i + 1) + ": " + ciArray[i]);
         }
@@ -53,20 +53,29 @@ public class InheritanceController {
         return lines;
     }
 
-    public int[] printCi(int Size) throws Exception {
+    public int[] printCi(String path) throws Exception {
 
         boolean singleLineCommented = false;
         boolean multiLineCommented = false;
 
-        File file = new File(SOURCE_CODE_PATH);
+        FileReader bfile = new FileReader(path);
+
+        BufferedReader reader = new BufferedReader(bfile);
+
+        int lines = 0;
+        while (reader.readLine() != null)
+            lines++;
+        reader.close();
+
+        File file = new File(path);
         Scanner sc = new Scanner(file);
 
-        File file1 = new File(SOURCE_CODE_PATH);
+        File file1 = new File(path);
         Scanner sc1 = new Scanner(file1);
 
-        int arraySize = Size;
+//        int arraySize = Size;
 
-        int Ci[] = new int[arraySize];
+        int Ci[] = new int[lines];
 
         int defaultValue = 0;
 
@@ -76,10 +85,10 @@ public class InheritanceController {
             String line = sc.nextLine();
             line = line.trim();
 
-            if (!line.isEmpty() && line.contains("class ")&& (SOURCE_CODE_PATH.contains(".java")) ) {
+            if (!line.isEmpty() && line.contains("class ")&& (path.contains(".java")) ) {
                 defaultValue = 2;
             }
-            if (!line.isEmpty() && line.contains("class ")&& (SOURCE_CODE_PATH.contains(".cpp")) ) {
+            if (!line.isEmpty() && line.contains("class ")&& (path.contains(".cpp")) ) {
                 defaultValue = 1;
             }
 
@@ -97,7 +106,7 @@ public class InheritanceController {
                 }
             }
 
-            for (int z = 0; z < arraySize; z++) {
+            for (int z = 0; z < lines; z++) {
                 Ci[z] = defaultValue;
             }
 
