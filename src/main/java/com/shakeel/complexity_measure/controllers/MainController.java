@@ -90,7 +90,7 @@ public class MainController {
         System.out.println("File Location - " + fileName);
 
 
-//      sizeComplexity.SizeComplexity cs = new sizeComplexity.SizeComplexity();
+        SizeComplexity cs = new SizeComplexity();
         ControlStructuresController ctc = new ControlStructuresController();
         NestedControlStructureController cnc = new NestedControlStructureController();
         InheritanceController ci = new InheritanceController();
@@ -108,11 +108,15 @@ public class MainController {
         RecursionIdentifierModel recursionModel;
         RecursiveController recursiveController = new RecursiveController();
 
+        //Save all Tokens of Cs
+        ArrayList<String> tokens = new ArrayList<>();
+        String tokenString = "";
+
         // Saving all Inheritance Count
         int ciCount[] = ci.printCi(path);
 
         //Output Table Format
-        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$6.6s | %7$6.6s | %8$6.6s |\n";
+        String format = "| %1$-6s | %2$-125s | %3$-30s | %4$-30s | %5$-15s | %6$-30s | %7$6.6s | %8$6.6s | %9$6.6s | %10$6.6s |\n";
 
 
         //Test Code Lines
@@ -150,9 +154,9 @@ public class MainController {
 
         //Output Table Padding and Header
         System.out.println();
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
-        System.out.format(format, "Line #", "Line", "Declared Method Name", "Called Method Name", "Is Recursive", "Ctc", "Cnc", "Ci");
-        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------",  "------------------------------","------", "------", "------", "------");
+        System.out.format(format, "Line #", "Line", "Declared Method Name", "Called Method Name", "Is Recursive", "Cs Tokens", "Cs", "Ctc", "Cnc", "Ci");
+        System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------",  "------------------------------","------", "------", "------", "------");
 
         //Output Table data
         for (RecursionIdentifierModel recursionIdentifierModel : recursionModelList){
@@ -163,12 +167,31 @@ public class MainController {
                 line = recursionIdentifierModel.getLine();
             }
 
+            // Cs Tokens
+            try{
+                tokens = cs.measureSize(line);
+                tokenString = "";
+                if(tokens.size() > 0){
+                    for(String tokenCs : tokens){
+                        if(tokenString != ""){
+                            tokenString = tokenString + "," + tokenCs;
+                        } else {
+                            tokenString = tokenCs;
+                        }
+                    }
+                }
+            } catch(NullPointerException ex){
+                System.out.println(ex);
+            }
+
             System.out.format(format,
                     recursionIdentifierModel.getLineNo(),
                     line,
                     recursionIdentifierModel.getMethodName(),
                     recursionIdentifierModel.getFunctionName(),
                     recursionIdentifierModel.getVisited(),
+                    tokenString,
+                    cs.measureSize(line).size(),
                     ctc.calculateCtcForLine(line),
                     cnc.calculateCncForLine(line),
                     ciCount[recursionIdentifierModel.getLineNo() - 1]);
