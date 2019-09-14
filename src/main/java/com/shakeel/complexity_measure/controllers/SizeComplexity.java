@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SizeComplexity8  {
+public class SizeComplexity  {
 
 	private String[] Arithmetic= {"+","-","*","/","%","=","|",".",">"};
 	private String[] Keywords= {"void","double","int","long","float","String"};
