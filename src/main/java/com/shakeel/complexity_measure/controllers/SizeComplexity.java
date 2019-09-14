@@ -5,16 +5,19 @@ import java.util.regex.Pattern;
 
 public class SizeComplexity  {
 
+	private int Cs=0;
 	private String[] Arithmetic= {"+","-","*","/","%","=","|",".",">"};
 	private String[] Keywords= {"void","double","int","long","float","String"};
 	private String[] KeywordsOther= {"printf","println","cout","cin","if","for","while","do-while","switch","case","System","out"};
 	private String[] Manipulators= {"endl","\n"};	
-	private String[] Keywords2= {"new","delete","throws"};
+	private String[] Keywords2= {"new"};
+	private String[] exemp= {"delete","throws"};
 	private ArrayList<String> var=new ArrayList<>();
 	private ArrayList<String> tokens;
 	 
 	public ArrayList measureSize(String str) throws Exception{
-				
+		
+		Cs=0;		
 		tokens = new ArrayList<>();	
 		String CurrentLine=str;
 								
@@ -22,6 +25,7 @@ public class SizeComplexity  {
 		detectChar(CurrentLine,Arithmetic,1);
 		detectChar(CurrentLine,Keywords,1);
 		detectChar(CurrentLine,Keywords2,2);
+		detectChar(CurrentLine,exemp,2);
 		detectChar(CurrentLine,Manipulators,1);
 		detectChar(CurrentLine, KeywordsOther, 1);
 			
@@ -61,7 +65,8 @@ public class SizeComplexity  {
 		}
 		 
         	while(m.find()) {
-        	 	
+			
+        	 	this.Cs+=val; 
         		//System.out.print(m.group().replaceAll("[^A-Za-z]", "").substring(0,ch.length()).trim()+", ");
         		tokens.add(m.group().replaceAll("[^A-Za-z]", "").substring(0,ch.length()).trim()+", ");
       	  	
@@ -95,6 +100,11 @@ public class SizeComplexity  {
 		
         	while(m.find()) {	
         		tokens.add(m.group()+", ");
+			this.Cs+=val;
         	}  
+	}
+	
+	public int getCount(){
+		return this.Cs;
 	}
 }
