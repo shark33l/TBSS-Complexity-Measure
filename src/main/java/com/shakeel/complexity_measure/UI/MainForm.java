@@ -16,14 +16,13 @@ public class MainForm extends JFrame{
     private JPanel mainPanel;
     private JLabel fileLabel;
     private JLabel Header;
-    private JComboBox fileCombo;
 
     MainController app = new MainController();
 
     public MainForm() {
 
         openFileChooser = new JFileChooser();
-        openFileChooser.setCurrentDirectory(new File (System.getProperty("user.home")));
+//        openFileChooser.setCurrentDirectory(new File (System.getProperty("user.home")));
 
 
         add(mainPanel);
@@ -33,11 +32,8 @@ public class MainForm extends JFrame{
         //Combo Box Strings
         String[] comboSelectionStrings = {"File", "Folder"};
 
-        fileCombo.addItem(comboSelectionStrings[0]);
-        fileCombo.addItem(comboSelectionStrings[1]);
-
-        fileCombo.setSelectedIndex(0);
         openFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        openFileChooser.setAcceptAllFileFilterUsed(false);
         openFileChooser.setFileFilter(new FileNameExtensionFilter("Java Files", "java"));
         openFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("C++ Files", "cpp"));
 
@@ -49,8 +45,11 @@ public class MainForm extends JFrame{
 
                 if (returnValue == JFileChooser.APPROVE_OPTION){
                     try{
-                        fileLabel.setText("Generating Report for " + openFileChooser.getSelectedFile().getName() + " - " + fileCombo.getSelectedItem() );
-                        fileLabel.setText("" + openFileChooser.getCurrentDirectory() + " - " + fileCombo.getSelectedItem() );
+                        if (openFileChooser.getSelectedFile().isFile()){
+                            fileLabel.setText("Generating Report for " + openFileChooser.getSelectedFile().getName() + " - File");
+                        } else {
+                            fileLabel.setText("Generating Report for " + openFileChooser.getSelectedFile().getName() + " - Directory");
+                        }
 
                         try{
                             if (openFileChooser.getSelectedFile().isFile()){

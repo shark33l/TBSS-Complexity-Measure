@@ -50,7 +50,6 @@ public class MainController {
             System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
             cnc.displayOutput();
             System.out.println("\n***********Calculating the Ci Count of Each Line******************");
-            ci.measureInheritanceComplexity();
             System.out.println("\n***********Calculating the Cr Count of Each Line******************");
 
         }else if(fileName.contains(".cpp")){
@@ -61,7 +60,6 @@ public class MainController {
             System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
             cnc.displayOutput();
             System.out.println("\n***********Calculating the Ci Count of Each Line******************");
-            ci.measureInheritanceComplexity();
             System.out.println("\n***********Calculating the Cr Count of Each Line******************");
 
         }else{

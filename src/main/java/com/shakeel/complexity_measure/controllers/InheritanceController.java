@@ -1,40 +1,48 @@
 package com.shakeel.complexity_measure.controllers;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InheritanceController {
-    public static final String SOURCE_CODE_PATH = "code.java";
-    public static final String TYPE = "java";
 
-   public void measureInheritanceComplexity() throws Exception{
+    public static final String SOURCE_CODE_PATH = "C:/Users/sasmini_112033/Desktop/TBSS-Complexity-Measure/code.java";
+    public static final List<String> keywords = Arrays.asList("extends ", "implements ", ":");
+    String commaMatching = "(\\,)";
+    String multilineComment = "(?s)/\\*.*?\\*/";
 
-      FileReader file=new FileReader(SOURCE_CODE_PATH);
-      BufferedReader reader=new BufferedReader(file);
+    ArrayList<String> programlines;
+    ArrayList<Integer> ciCount;
 
+    public void displayOutput() throws Exception {
 
-       int lines = 0;
-       while (reader.readLine() != null)
-           lines++;
-       reader.close();
+        FileReader file = new FileReader(SOURCE_CODE_PATH);
+        BufferedReader reader = new BufferedReader(file);
 
+        int lines = 0;
+        while (reader.readLine() != null)
+            lines++;
+        reader.close();
 
-      System.out.println("Number of lines: "+lines);
+        System.out.println("Number of lines: " + lines);
 
+        int ciArray[] = printCi(lines);
+        for (int i = 0; i < lines; i++) {
+            System.out.println("Ci " + "line " + (i + 1) + ": " + ciArray[i]);
+        }
+    }
 
-      int ciArray[] = printCi(lines, TYPE);
-      for(int i=0; i < lines; i++){
-          System.out.println("Ci " +"line " + (i+1) + ": " + ciArray[i]);
-      }
-   }
+    public int countLines(String code) throws Exception {
 
-    public int countLines(String code) throws Exception{
-
-        FileReader file=new FileReader(SOURCE_CODE_PATH);
-        BufferedReader reader=new BufferedReader(file);
-
+        FileReader file = new FileReader(SOURCE_CODE_PATH);
+        BufferedReader reader = new BufferedReader(file);
 
 
         int lines = 0;
@@ -45,62 +53,85 @@ public class InheritanceController {
         return lines;
     }
 
-    public int[] printCi(int Size, String Type) throws Exception{
+    public int[] printCi(int Size) throws Exception {
 
+        boolean singleLineCommented = false;
+        boolean multiLineCommented = false;
 
-        File file=new File(SOURCE_CODE_PATH);
+        File file = new File(SOURCE_CODE_PATH);
         Scanner sc = new Scanner(file);
 
-        File file1=new File(SOURCE_CODE_PATH);
+        File file1 = new File(SOURCE_CODE_PATH);
         Scanner sc1 = new Scanner(file1);
 
         int arraySize = Size;
-
-        //System.out.println(Size);
 
         int Ci[] = new int[arraySize];
 
         int defaultValue = 0;
 
-        if(Type == "java"){
-           defaultValue = 1;
+        int i = 0;
 
-        }else{
-            defaultValue = 0;
-        }
-
-        int i=0;
-
-        while(sc.hasNextLine()){
+        while (sc.hasNextLine()) {
             String line = sc.nextLine();
+            line = line.trim();
 
-                if (line.contains("class ")) {
-                    defaultValue = defaultValue + 1;
-                }
-                if (line.contains("extends ")) {
-                    defaultValue = defaultValue + 1;
-                }
-                if (line.contains("implements ")) {
-                    defaultValue = defaultValue + 1;
-                }
-        }
+            if (!line.isEmpty() && line.contains("class ")&& (SOURCE_CODE_PATH.contains(".java")) ) {
+                defaultValue = 2;
+            }
+            if (!line.isEmpty() && line.contains("class ")&& (SOURCE_CODE_PATH.contains(".cpp")) ) {
+                defaultValue = 1;
+            }
 
-        for( int z = 0 ; z<arraySize ; z++){
-            Ci[z] = defaultValue;
-        }
+                for (String keyword : keywords) {
+                    if (!line.isEmpty() && line.indexOf(keyword) != -1 && line.contains("class ") ) {
+                        if (line.contains(keyword)) {
+                            Pattern pattern5 = Pattern.compile(commaMatching);
+                            Matcher matcher5 = pattern5.matcher(line);
+                            while(matcher5.find()){
+                                defaultValue++;
+                            }
+                            defaultValue = defaultValue + 1;
+                        }
+                    }
+                }
+            }
+
+            for (int z = 0; z < arraySize; z++) {
+                Ci[z] = defaultValue;
+            }
 
         int temp = defaultValue;
 
-        while(sc1.hasNextLine()){
+        while (sc1.hasNextLine()) {
             String line1 = sc1.nextLine();
 
-            if(line1.contains("class ") || line1.contains("} ") || line1.equals("}") || line1.equals(" }") || line1.equals("\\r?\\n") || line1.equals("") || line1.equals("else {") || line1.equals("else{") || line1.equals("// ")){
+            if (line1.trim().startsWith("//") || line1.trim().startsWith("import") || line1.trim().startsWith("include")) {
+                Ci[i] = 0;
+            }
+            if (line1.trim().startsWith("/*")) {
+                line1 = line1.replace("(?s)/\\*.*?\\*/", "");
+                Ci[i] = 0;
+            }
+
+            if (line1.contains("//")) {
+                line1 = line1.replace(line1.substring(line1.indexOf("//")), "");
+            }
+            if (line1.trim().startsWith("try{") || line1.trim().startsWith("}") || line1.trim().startsWith("else")|| line1.trim().startsWith("else{") || line1.trim().startsWith("}else{") || line1.isEmpty()|| line1.equals("") ||line1.equals("\\r?\\n")|| line1.trim().startsWith("else") || line1.trim().contains("class")) {
+                Ci[i] = 0;
+            }
+            if((line1.trim().contains("System.out.println")) || (line1.trim().contains("System.out.print"))){
+                Ci[i] = defaultValue;
+            }
+            Pattern pattern6 = Pattern.compile(multilineComment);
+            Matcher matcher6 = pattern6.matcher(line1);
+            while(matcher6.find()){
                 Ci[i] = 0;
             }
             i++;
         }
-      return Ci;
+        return Ci;
     }
-
-
 }
+
+

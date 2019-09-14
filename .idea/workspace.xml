@@ -4,9 +4,15 @@
     <list default="true" id="70888431-e40c-432f-9f55-c6e48a335549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/SizeComplexity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/SizeComplexity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/InheritanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/InheritanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sizeComplexity/SizeComplexity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/UI/MainForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/UI/MainForm$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/UI/MainForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/UI/MainForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/controllers/InheritanceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/controllers/InheritanceController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/controllers/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shakeel/complexity_measure/controllers/MainController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -21,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="330">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -33,20 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="299">
+              <caret line="58" column="32" selection-start-line="58" selection-start-column="32" selection-end-line="58" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,6 +49,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="412">
+              <caret line="41" column="56" lean-forward="true" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.form">
           <provider selected="true" editor-type-id="ui-designer" />
         </entry>
@@ -71,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/NestedControlStructureController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
+            <state relative-caret-position="597">
               <caret line="52" column="34" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="34" />
             </state>
           </provider>
@@ -108,8 +114,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/InheritanceController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="71" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="71" />
+            <state relative-caret-position="145">
+              <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -144,14 +150,14 @@
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/NestedControlStructureController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/SizeComplexity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/mainController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/mainForm.form" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/mainForm.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Utils/FileFilterUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Utils/CustomFileFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.form" />
+        <option value="$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java" />
       </list>
     </option>
   </component>
@@ -254,7 +260,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568444110555" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568445435131" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -307,12 +313,12 @@
       <workItem from="1566063452469" duration="13353000" />
       <workItem from="1568350993269" duration="817000" />
       <workItem from="1568399780819" duration="148000" />
-      <workItem from="1568435172057" duration="8251000" />
+      <workItem from="1568435172057" duration="9541000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44584000" />
+    <option name="totallyTimeSpent" value="45874000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1097" extended-state="0" />
@@ -478,13 +484,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/NestedControlStructureController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="52" column="34" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/identifiers/RecursionIdentifier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1035">
@@ -511,37 +510,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/InheritanceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="28" column="71" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Utils/CustomFileFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -555,10 +527,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/InheritanceController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="145">
+          <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/NestedControlStructureController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="52" column="34" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -567,6 +553,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.form">
       <provider selected="true" editor-type-id="ui-designer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/controllers/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="58" column="32" selection-start-line="58" selection-start-column="32" selection-end-line="58" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shakeel/complexity_measure/UI/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="41" column="56" lean-forward="true" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
