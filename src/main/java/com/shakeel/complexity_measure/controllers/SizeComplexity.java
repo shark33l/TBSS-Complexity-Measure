@@ -18,18 +18,18 @@ public class SizeComplexity8  {
 		tokens = new ArrayList<>();	
 		String CurrentLine=str;
 								
-			regexChecker(CurrentLine, "dd", 1);
-			detectChar(CurrentLine,Arithmetic,1);
-			detectChar(CurrentLine,Keywords,1);
-			detectChar(CurrentLine,Keywords2,2);
-			detectChar(CurrentLine,Manipulators,1);
-			detectChar(CurrentLine, KeywordsOther, 1);
+		regexChecker(CurrentLine, "dd", 1);
+		detectChar(CurrentLine,Arithmetic,1);
+		detectChar(CurrentLine,Keywords,1);
+		detectChar(CurrentLine,Keywords2,2);
+		detectChar(CurrentLine,Manipulators,1);
+		detectChar(CurrentLine, KeywordsOther, 1);
 			
-			for(String k:var) {
-				regexCheckerKeyword(CurrentLine,k,1,false);
-			}
+		for(String k:var) {
+			regexCheckerKeyword(CurrentLine,k,1,false);
+		}
 			
-			return tokens;	
+		return tokens;	
 	}
 	
 	public void detectChar(String CurrentLine,String ch[],int val) throws Exception {
