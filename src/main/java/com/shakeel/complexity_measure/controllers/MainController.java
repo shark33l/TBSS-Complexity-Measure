@@ -8,19 +8,25 @@ import com.shakeel.complexity_measure.model.RecursionIdentifierModel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class MainController {
 
 
-    public void fileRead(String path) throws Exception{
+    public void fileRead(String path, String fileNameOnly) throws Exception{
 
         String line;
+        String commentLine[];
         ArrayList<String> fileLines = new ArrayList<>();
         String fileName = path;
         //Adding a file
@@ -28,42 +34,68 @@ public class MainController {
 
         //Reading the file
         BufferedReader br = new BufferedReader(file);
-//        String extension = FilenameUtils.getExtension(file);
+
+        Boolean multiLineCommentCaught = false;
 
         while((line = br.readLine())!= null) {
+
+            if(line.contains("//")){
+
+                line = line.split("//")[0];
+                if(line.replace(" ","").length() == 0){
+                    line = "// Comment Removed";
+                }
+
+            } else if(line.contains("/*")){
+
+                commentLine = line.split("/*");
+                multiLineCommentCaught = true;
+
+                if(commentLine[1].contains("*/")){
+                    multiLineCommentCaught = false;
+                    line = commentLine[1];
+                    line = line.split("/*")[1];
+                }
+
+                if((line.replace(" ","").length() == 0) || (commentLine[0].replace(" ","").length() == 0)){
+                    line = "// Comment Removed";
+                }
+
+                line = line + " /* Comment Removed */ " + commentLine[0];
+
+            }else if (multiLineCommentCaught){
+
+                if(line.contains("*/")){
+                    multiLineCommentCaught = false;
+                    line = line.split("/*")[1];
+
+                    if(line.replace(" ","").length() == 0){
+                        line = "// Comment Removed";
+                    }
+                } else {
+                    line = "// Comment Removed";
+                }
+
+            }
+
             fileLines.add(line);
+            System.out.println(fileLines.size());
 
         }
 
-//        sizeComplexity.SizeComplexity cs = new sizeComplexity.SizeComplexity();
+        String fileType = getExtension(fileName);
+
+        System.out.println("File Type - " + fileType);
+        System.out.println("File Name - " + fileNameOnly);
+        System.out.println("File Location - " + fileName);
+
+
+//      sizeComplexity.SizeComplexity cs = new sizeComplexity.SizeComplexity();
         ControlStructuresController ctc = new ControlStructuresController();
         NestedControlStructureController cnc = new NestedControlStructureController();
         InheritanceController ci = new InheritanceController();
         RecursionIdentifier cr = new RecursionIdentifier();
 
-
-        if (fileName.contains(".java")) {
-            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
-//            cs.measureSize();
-            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
-            ctc.displayOutput();
-            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
-            cnc.displayOutput();
-            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
-
-        }else if(fileName.contains(".cpp")){
-            System.out.println("\n***********Calculating the Cs Count of Each Line******************");
-
-            System.out.println("\n***********Calculating the Ctc Count of Each Line******************");
-            ctc.displayOutput();
-            System.out.println("\n***********Calculating the Cnc Count of Each Line******************");
-            cnc.displayOutput();
-            System.out.println("\n***********Calculating the Ci Count of Each Line******************");
-            System.out.println("\n***********Calculating the Cr Count of Each Line******************");
-
-        }else{
-            System.out.println("The input file type is not supported!");
-        }
 
         int lineCount = 0;
 
@@ -119,7 +151,7 @@ public class MainController {
         //Output Table Padding and Header
         System.out.println();
         System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
-        System.out.format(format, "Line #", "Line", "Method Name", "Function Name", "Is Recursive", "Ctc", "Cnc", "Ci");
+        System.out.format(format, "Line #", "Line", "Declared Method Name", "Called Method Name", "Is Recursive", "Ctc", "Cnc", "Ci");
         System.out.format(format, "------", "-----------------------------------------------------------------------------------------------------------------------------", "------------------------------", "------------------------------", "--------------", "------", "------", "------");
 
         //Output Table data
@@ -144,5 +176,41 @@ public class MainController {
         }
 
 
+    }
+
+    public void directoryRead(Path directoryPath, String directoryName){
+
+        System.out.println("Directory Name - " + directoryName);
+
+        try(Stream<Path> subPaths = Files.walk(directoryPath)){
+            subPaths.forEach(subPath -> {
+                if(getExtension(subPath.toString()).equalsIgnoreCase("java") || getExtension(subPath.toString()).equalsIgnoreCase("cpp")){
+                    System.out.println(subPath.toString());
+                    try{
+                        fileRead(subPath.toString(), subPath.getFileName().toString());
+                    }catch(Exception ex){
+                        System.out.println("Error - " + ex);
+                    }
+                }
+            });
+        }catch(IOException IOex){
+            System.out.println("Error - " + IOex);
+        }
+
+    }
+
+    public String getExtension(String path){
+
+        String fileType;
+
+        int i = path.lastIndexOf('.');
+
+        if (i > 0 &&  i < path.length() - 1) {
+            fileType = path.substring(i+1).toLowerCase();
+        } else {
+            fileType = "Unsupported";
+        }
+
+        return fileType;
     }
 }

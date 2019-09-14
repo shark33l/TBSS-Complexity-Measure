@@ -97,7 +97,7 @@ public class RecursionIdentifier {
             final String insideParens = matcher.group(2);
 
             if (keyWordsBeforeParens.contains(beforeParens)) {
-                System.out.println("Keyword: " + beforeParens);
+//                System.out.println("Keyword: " + beforeParens);
                 return containsMethodCall(insideParens);
             } else {
                 //If method contains and object before method, it will be split separately into objects and methods
@@ -113,14 +113,14 @@ public class RecursionIdentifier {
 
                 if(Arrays.stream(methodKeywords).anyMatch(codeLine::contains)){
 
-                    System.out.println("Method Name : " + methodName);
+//                    System.out.println("Method Name : " + methodName);
                     setMethodFound(true);
                     setMethod(methodName);
 
 
                 } else {
 
-                    System.out.println("Function name: " + methodName + "  |  Object Name : " + objectName);
+//                    System.out.println("Function name: " + methodName + "  |  Object Name : " + objectName);
                     setFunctionFound(true);
                     setFunctionName(methodName);
 

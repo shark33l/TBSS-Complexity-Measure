@@ -53,8 +53,9 @@ public class MainForm extends JFrame{
 
                         try{
                             if (openFileChooser.getSelectedFile().isFile()){
-                                app.fileRead("" + openFileChooser.getSelectedFile());
+                                app.fileRead(openFileChooser.getSelectedFile().toString(), openFileChooser.getSelectedFile().getName());
                             } else {
+                                app.directoryRead(openFileChooser.getSelectedFile().toPath(), openFileChooser.getSelectedFile().getName());
                                 System.out.println("Directory Selected");
                             }
                         }catch(Exception ex){
