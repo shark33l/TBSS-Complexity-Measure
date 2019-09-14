@@ -1,4 +1,4 @@
-package sizeComplexity;
+package com.shakeel.complexity_measure.controllers;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Field;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SizeComplexity7  {
+public class SizeComplexity  {
 
 	private int Cs=0;
 	private String[] Arithmetic= {"+","-","*","/","%","=","|",".",">"};
