@@ -10,6 +10,7 @@ public class RecursionIdentifierModel {
     private Boolean visited;
     private String checkReadMethod;
     private int countCr;
+    private int timesVisited;
 
 //
 //    public RecursionIdentifierModel(){
@@ -93,5 +94,13 @@ public class RecursionIdentifierModel {
 
     public void setCheckReadMethod(String checkReadMethod) {
         this.checkReadMethod = checkReadMethod;
+    }
+
+    public int getTimesVisited() {
+        return timesVisited;
+    }
+
+    public void setTimesVisited(int timesVisited) {
+        this.timesVisited = timesVisited;
     }
 }

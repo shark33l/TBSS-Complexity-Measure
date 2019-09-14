@@ -24,11 +24,12 @@ import java.util.stream.Stream;
 
 public class MainController {
 
-    ComplexityModel complexityModel = new ComplexityModel();
+    ArrayList<ComplexityModel> complexityModelArrayList = new ArrayList<>();
     ComplexityCalculations complexityCalculations = new ComplexityCalculations();
 
-    public void fileRead(String path, String fileNameOnly) throws Exception{
+    public void fileRead(Path pathPath, String fileNameOnly) throws Exception{
 
+        String path = pathPath.toString();
         String line;
         String commentLine[];
         ArrayList<String> fileLines = new ArrayList<>();
@@ -204,7 +205,6 @@ public class MainController {
             if(checkMethodRead != null){
 
                 countCr = countCps * 2;
-                complexityCalculations.complexityProgramCp(countCps, countCr);
 
             }
 
@@ -223,15 +223,65 @@ public class MainController {
                     countCi
             );
 
+            //Adding to Complexity Model
+            ComplexityModel complexityModel = new ComplexityModel();
+            complexityModel.setFileType(fileType);
+            complexityModel.setFileName(fileNameOnly);
+            complexityModel.setFilePath(fileName);
+            complexityModel.setLineNo(lineNo);
+            complexityModel.setLine(line);
+
+            //Size Complexity
+            complexityModel.setCsToken(tokenString);
+            complexityModel.setCountCs(countCs);
+
+            //Conditional
+            complexityModel.setCountCtc(countCtc);
+
+            //Nested
+            complexityModel.setCountCnc(countCnc);
+
+            //Inheritance
+            complexityModel.setCountCi(countCi);
+
+            //TW - Total Complexity
+            complexityModel.setCountTW(countTw);
+
+            //Cps - Complexity Statement
+            complexityModel.setCountCps(countCps);
+
+            //Recursions
+            complexityModel.setMethodName(methodName);
+            complexityModel.setFunctionName(functionName);
+            complexityModel.setRecursive(isVisited);
+
+
+            //Check if recursive method was visited
+//            if(functionName.length() > 0 && isVisited){
+//                for(RecursionIdentifierModel recursionIdentifierModelVisitedChecker : recursionModelList){
+//                    if(recursionIdentifierModel.getMethodName().equals(functionName)){
+//                        recursionIdentifierModel.setTimesVisited(recursionIdentifierModelVisitedChecker.getTimesVisited() + 1);
+//                    }
+//                }
+//            }
+
+            complexityModel.setTimesVisited(recursionIdentifierModel.getTimesVisited());
+
+            //Cr - Temporary Recursion
+            complexityModel.setCountCr(countCr);
+
+            //Add Complexity Model to list
+            complexityModelArrayList.add(complexityModel);
+
         }
 
-        //Adding to Complexity Model
 
 
 
     }
 
     public void directoryRead(Path directoryPath, String directoryName){
+
 
         System.out.println("Directory Name - " + directoryName);
 
@@ -240,7 +290,7 @@ public class MainController {
                 if(getExtension(subPath.toString()).equalsIgnoreCase("java") || getExtension(subPath.toString()).equalsIgnoreCase("cpp")){
                     System.out.println(subPath.toString());
                     try{
-                        fileRead(subPath.toString(), subPath.getFileName().toString());
+                        fileRead(subPath, subPath.getFileName().toString());
                     }catch(Exception ex){
                         System.out.println("Error - " + ex);
                     }
@@ -265,5 +315,64 @@ public class MainController {
         }
 
         return fileType;
+    }
+
+    public void recursiveCountVisited(){
+
+        for (ComplexityModel complexityModel : complexityModelArrayList){
+
+            if(complexityModel.getFunctionName().length() > 0 /*&& complexityModel.getRecursive()*/){
+
+                for (ComplexityModel complexityModelVisitedChecker : complexityModelArrayList){
+                    if(complexityModelVisitedChecker.getMethodName().equals(complexityModel.getFunctionName())){
+                        complexityModelVisitedChecker.setTimesVisited(complexityModelVisitedChecker.getTimesVisited() + 1);
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    public void calculateActualMultipleCr(){
+
+        int countCr;
+        int countCp;
+
+        for (ComplexityModel complexityModel : complexityModelArrayList){
+
+            countCr = complexityModel.getCountCr() * complexityModel.getTimesVisited();
+            countCp = complexityModel.getCountCps() + countCr;
+            complexityModel.setCountCr(countCr);
+            complexityModel.setCountCp(countCp);
+
+        }
+
+    }
+
+    //Here could be either directory name or file name
+    public void generateReport(String selectionType, Path path, String name, String saveLocation){
+
+        CreatePdf createPdf = new CreatePdf();
+        complexityModelArrayList.clear();
+
+
+        try {
+            if (selectionType == "File") {
+                fileRead(path, name);
+            } else {
+                directoryRead(path, name);
+            }
+
+            recursiveCountVisited();
+            calculateActualMultipleCr();
+            createPdf.createPdfDocument(complexityModelArrayList, saveLocation);
+
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 }
