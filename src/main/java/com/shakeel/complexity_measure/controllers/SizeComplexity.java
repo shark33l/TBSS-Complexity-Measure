@@ -89,7 +89,7 @@ public class SizeComplexity  {
 			p = Pattern.compile("[\\s\\d\\w][\\=]+");
 	        	m = p.matcher(str);
 		}else{
-			p = Pattern.compile("\\\\"+ch+"+.");
+			p = Pattern.compile("\\"+ch+"+.");
 	       	 	m = p.matcher(str);
 		}
 		

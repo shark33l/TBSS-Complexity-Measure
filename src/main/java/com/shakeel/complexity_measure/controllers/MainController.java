@@ -168,20 +168,20 @@ public class MainController {
             }
 
             // Cs Tokens
-            try{
-                tokens = cs.measureSize(line);
+            if(line.contains("//") || line.contains("/*")){
                 tokenString = "";
-                if(tokens.size() > 0){
-                    for(String tokenCs : tokens){
-                        if(tokenString != ""){
-                            tokenString = tokenString + "," + tokenCs;
-                        } else {
-                            tokenString = tokenCs;
+            } else {
+                try {
+                    tokens = cs.measureSize(line);
+                    tokenString = "";
+                    if (tokens.size() > 0) {
+                        for (String tokenCs : tokens) {
+                            tokenString = tokenString + tokenCs;
                         }
                     }
+                } catch (NullPointerException ex) {
+                    System.out.println(ex);
                 }
-            } catch(NullPointerException ex){
-                System.out.println(ex);
             }
 
             System.out.format(format,
