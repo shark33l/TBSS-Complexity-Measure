@@ -21,6 +21,7 @@ public class ComplexityModel {
     private int countTW;
     private int countCps;
     private int countCp;
+    private String checkMethodRead;
 
     public ComplexityModel() {
     }
@@ -175,5 +176,13 @@ public class ComplexityModel {
 
     public void setCountCp(int countCp) {
         this.countCp = countCp;
+    }
+
+    public String getCheckMethodRead() {
+        return checkMethodRead;
+    }
+
+    public void setCheckMethodRead(String checkMethodRead) {
+        this.checkMethodRead = checkMethodRead;
     }
 }

@@ -254,6 +254,7 @@ public class MainController {
             complexityModel.setMethodName(methodName);
             complexityModel.setFunctionName(functionName);
             complexityModel.setRecursive(isVisited);
+            complexityModel.setCheckMethodRead(checkMethodRead);
 
 
             //Check if recursive method was visited
@@ -324,8 +325,10 @@ public class MainController {
             if(complexityModel.getFunctionName().length() > 0 /*&& complexityModel.getRecursive()*/){
 
                 for (ComplexityModel complexityModelVisitedChecker : complexityModelArrayList){
-                    if(complexityModelVisitedChecker.getMethodName().equals(complexityModel.getFunctionName())){
-                        complexityModelVisitedChecker.setTimesVisited(complexityModelVisitedChecker.getTimesVisited() + 1);
+                    if(complexityModelVisitedChecker.getCheckMethodRead() != null) {
+                        if (complexityModelVisitedChecker.getCheckMethodRead().equals(complexityModel.getFunctionName())) {
+                            complexityModelVisitedChecker.setTimesVisited(complexityModelVisitedChecker.getTimesVisited() + 1);
+                        }
                     }
                 }
 
